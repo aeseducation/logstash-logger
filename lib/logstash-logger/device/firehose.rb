@@ -23,10 +23,13 @@ module LogStashLogger
       end
 
       def put_records(records)
-        @io.put_record_batch({
+        puts "#{DateTime.now.to_s} FIREHOSE - START Sending #{records.length} Records"
+        value = @io.put_record_batch({
           records: records,
           delivery_stream_name: @stream
         })
+        puts "#{DateTime.now.to_s} FIREHOSE - DONE Sending #{records.length} Records"
+        value
       end
 
       def is_successful_response(resp)
